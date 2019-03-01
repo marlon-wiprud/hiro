@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "459730574635",
+    "firebase_url": "https://hiro-27615.firebaseio.com",
+    "project_id": "hiro-27615",
+    "storage_bucket": "hiro-27615.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459730574635:android:11c3cb5548539f5c",
+        "android_client_info": {
+          "package_name": "com.viral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459730574635-0qaaaovkh4f8e9j8qutidtsc8d5tkglj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.viral",
+            "certificate_hash": "74fae898557de22eb18b6b2c9f885dd87296294b"
+          }
+        },
+        {
+          "client_id": "459730574635-hsb7rls9aa0i68lt9o6sblanqjecbdr4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHWH9gZe43g9xX6To7iaQgZWbiGctedxU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459730574635-hsb7rls9aa0i68lt9o6sblanqjecbdr4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
