@@ -8,6 +8,7 @@ const HiroInput = props => {
       placeholder={props.prompt}
       onChangeText={text => props.onChange(text)}
       secureTextEntry={props.isSecure}
+      value={props.value}
     />
   );
 };

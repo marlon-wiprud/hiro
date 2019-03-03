@@ -1,5 +1,6 @@
 import * as types from "./user.action.types";
 import firebase from "react-native-firebase";
+import { my_ip } from "../../vars";
 
 export const saveCreateAccForm = data => ({
   type: types.SAVE_CREATE_ACC_FORM,
@@ -11,40 +12,14 @@ export const saveUserPref = userPref => ({
   payload: userPref
 });
 
-export const userRegistration = data => {
-  return dispatch => {
-    const {
-      email,
-      password,
-      firstname,
-      lastname,
-      genreArr,
-      favoriteArtist
-    } = data;
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(userData => {
-        const uid = userData.user.uid;
-        dispatch(registerFirebaseSuccess(uid));
-        dispatch(registerHiroUser(uid, firstname, lastname));
-        dispatch(insertFavoriteArtist({ uid, favoriteArtist }));
-        dispatch(insertFavoriteGenres({ uid, genreArr }));
-      })
-      .catch(err => console.log(err));
-  };
-};
-
 export const registerFirebaseSuccess = uid => ({
   type: types.REGISTER_FIREBASE_SUCCESS,
   payload: uid
 });
 
-export const registerHiroUser = (uid, firstname, lastname) => {
+export const registerHiroUser = data => {
   return dispatch => {
-    const data = { uid, firstname, lastname };
-    fetch("http://192.168.10.3:3000/user", {
+    fetch(`http://${my_ip}:3000/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -53,14 +28,20 @@ export const registerHiroUser = (uid, firstname, lastname) => {
     })
       .then(res => {
         // do something
+        console.log("====REGISTER HIRO USER SUCCESS====");
+        dispatch(registerHiroUserSuccess());
       })
       .catch(err => console.log(err));
   };
 };
 
+export const registerHiroUserSuccess = () => ({
+  type: types.REGISTER_HIRO_USER_SUCCESS
+});
+
 export const insertFavoriteGenres = data => {
   return dispatch => {
-    fetch("http://192.168.10.3:3000/favorite_genre", {
+    fetch(`http://${my_ip}:3000/genre`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -69,6 +50,7 @@ export const insertFavoriteGenres = data => {
     })
       .then(res => {
         // do something
+        console.log("INSERT GENRE SUCCESS");
       })
       .catch(err => console.log(err));
   };
@@ -76,7 +58,7 @@ export const insertFavoriteGenres = data => {
 
 export const insertFavoriteArtist = data => {
   return dispatch => {
-    fetch("http://192.168.10.3:3000/favorite_artist", {
+    fetch(`http://${my_ip}:3000/artist`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -85,6 +67,7 @@ export const insertFavoriteArtist = data => {
     })
       .then(res => {
         // do something
+        console.log("INSERT ARTIST SUCCESS");
       })
       .catch(err => console.log(err));
   };

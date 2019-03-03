@@ -6,13 +6,21 @@ import HiroButton from "../components/hiroButton";
 import * as userActions from "../state/userState/user.actions";
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    uid: state.userReducer.uid
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     saveUserPref: userPref => {
       dispatch(userActions.saveUserPref(userPref));
+    },
+    insertFavoriteGenres: genreArr => {
+      dispatch(userActions.insertFavoriteGenres(genreArr));
+    },
+    insertFavoriteArtist: artist => {
+      dispatch(userActions.insertFavoriteArtist(artist));
     }
   };
 };
@@ -36,7 +44,14 @@ class CreateUserPref extends Component {
       genre3: this.state.genre3,
       favoriteArtist: this.state.favoriteArtist
     };
+
+    const genreArr = [this.state.genre1, this.state.genre2, this.state.genre3];
     this.props.saveUserPref(userPref);
+    this.props.insertFavoriteGenres({ genreArr, uid: this.props.uid });
+    this.props.insertFavoriteArtist({
+      uid: this.props.uid,
+      favoriteArtist: this.state.favoriteArtist
+    });
     this.props.navigation.navigate("SpotifyAuth");
   }
 
@@ -47,7 +62,14 @@ class CreateUserPref extends Component {
           style={styles.hiroLogo}
           source={require("../assets/hiro_vertical_logo.png")}
         />
-        <Text>Help me get to know you better!</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>
+            {" "}
+            Help me get to know you better by answering the following questions.
+            this will aid me in making sure your stream is always feeling fresh
+            and curated to your taste!
+          </Text>
+        </View>
         <HiroInput
           prompt="Favorite genre #1?"
           onChange={text => this.setState({ genre1: text })}
@@ -86,6 +108,13 @@ const styles = StyleSheet.create({
   hiroLogo: {
     width: 100,
     height: 100
+  },
+  text: {
+    textAlign: "center",
+    color: "#ACACAC"
+  },
+  textContainer: {
+    width: "60%"
   }
 });
 

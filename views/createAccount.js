@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import HiroInput from "../components/hiroInput";
 import HiroButton from "../components/hiroButton";
 import * as userActions from "../state/userState/user.actions";
+import firebase from "react-native-firebase";
 
 const mapStateToProps = state => {
   return {};
@@ -13,6 +14,12 @@ const mapDispatchToProps = dispatch => {
   return {
     saveCreateAccForm: userData => {
       dispatch(userActions.saveCreateAccForm(userData));
+    },
+    registerFirebaseSuccess: uid => {
+      dispatch(userActions.registerFirebaseSuccess(uid));
+    },
+    registerHiroUser: data => {
+      dispatch(userActions.registerHiroUser(data));
     }
   };
 };
@@ -32,24 +39,59 @@ class CreateAccount extends Component {
   }
 
   handleNext() {
-    // TO DO:  more form validation before allowing user to go to next screen
     const email = this.state.email;
     const firstname = this.state.firstname;
     const lastname = this.state.lastname;
     const password = this.state.password;
     const retypePassword = this.state.retype_password;
 
-    const userData = { email, firstname, lastname, password, retypePassword };
+    this.setState({
+      errorMessage: ""
+    });
 
-    if (password === retypePassword) {
-      this.props.saveCreateAccForm(userData);
-      this.props.navigation.navigate("CreateUserPref");
-    } else {
+    const userData = { email, firstname, lastname, password, retypePassword };
+    if (password !== retypePassword) {
       this.setState({
         errorMessage: "Passwords must match!",
         password: "",
         retype_password: ""
       });
+    } else if (password.length < 6) {
+      this.setState({
+        errorMessage: "Password must be atleast 6 characters",
+        password: "",
+        retype_password: ""
+      });
+    } else {
+      this.props.saveCreateAccForm(userData);
+
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(userData => {
+          const uid = userData.user.uid;
+          this.props.registerFirebaseSuccess(uid);
+          console.log("====FIREBASE UID ====", uid);
+
+          this.props.registerHiroUser({
+            uid,
+            firstname,
+            lastname
+          });
+
+          this.props.navigation.navigate("CreateUserPref");
+        })
+        .catch(err => {
+          console.log("===FIREBASE ERROR====", err);
+          if ((err.code = "auth/email-already-in-use")) {
+            this.setState({
+              errorMessage: "Email already in use",
+              email: "",
+              password: "",
+              retype_password: ""
+            });
+          }
+        });
     }
   }
 
@@ -60,11 +102,17 @@ class CreateAccount extends Component {
           style={styles.hiroLogo}
           source={require("../assets/hiro_vertical_logo.png")}
         />
-        <Text>
-          Say hello to Hiro, the worlds firt white-glove music discovery
-          platform
-        </Text>
-        <Text>{this.state.errorMessage}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>
+            Hi there,<Text style={{ color: "white" }}> Im Hiro</Text>, the
+            worlds first{" "}
+            <Text style={{ color: "white" }}>white-glove music discovery</Text>{" "}
+            platform that curates music for you based on your{" "}
+            <Text style={{ color: "white" }}>real-time mood</Text>. Finding your
+            vibe just got a whole lot easier.
+          </Text>
+        </View>
+        <Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
         <HiroInput
           prompt="email"
           onChange={text => this.setState({ email: text })}
@@ -80,11 +128,13 @@ class CreateAccount extends Component {
         <HiroInput
           prompt="password"
           onChange={text => this.setState({ password: text })}
+          value={this.state.password}
           isSecure={true}
         />
         <HiroInput
           prompt="re-type password"
           onChange={text => this.setState({ retype_password: text })}
+          value={this.state.retype_password}
           isSecure={true}
         />
         <HiroButton
@@ -109,6 +159,13 @@ const styles = StyleSheet.create({
   hiroLogo: {
     width: 100,
     height: 100
+  },
+  text: {
+    textAlign: "center",
+    color: "#ACACAC"
+  },
+  textContainer: {
+    width: "60%"
   }
 });
 

@@ -45,7 +45,7 @@ class HiroLogin extends Component {
           style={styles.bottomBanner}
         >
           <Text style={styles.bannerText}>
-            Need an account?
+            Need an account?{" "}
             <Text style={{ color: "white" }}>Register now.</Text>
           </Text>
         </TouchableOpacity>

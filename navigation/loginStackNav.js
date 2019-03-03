@@ -4,7 +4,7 @@ import SpotifyAuth from "../views/spotifyAuth";
 import CreateAccount from "../views/createAccount";
 import HiroLogin from "../views/hiroLogin";
 import CreateUserPref from "../views/createUserPref";
-import GeneratingProfile from "../views/generatingProfile";
+import MoodStackNav from "../navigation/moodStackNav";
 
 const LoginStackNav = createStackNavigator(
   {
@@ -26,15 +26,15 @@ const LoginStackNav = createStackNavigator(
         header: null
       }
     },
-    GeneratingProfile: {
-      screen: GeneratingProfile,
+    MoodStackNav: {
+      screen: MoodStackNav,
       navigationOptions: {
         header: null
       }
     }
   },
   {
-    initialRouteName: "HiroLogin"
+    initialRouteName: "MoodStackNav"
   }
 );
 

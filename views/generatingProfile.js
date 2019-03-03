@@ -7,16 +7,15 @@ const mapStateToProps = state => {
   return {
     uid: state.userReducer.uid,
     firstname: state.userReducer.firstname,
-    lastname: state.userReducer.lastname
+    lastname: state.userReducer.lastname,
+    genreArr: state.userReducer.genreArr,
+    favoriteArtist: state.userReducer.favoriteArtist,
+    loggedIn: state.userReducer.loggedIn
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    registerHiroDB: (uid, firstname, lastname) => {
-      dispatch(userActions.registerHiroUser(uid, firstname, lastname));
-    }
-  };
+  return {};
 };
 
 class GeneratingProfile extends Component {
@@ -28,7 +27,6 @@ class GeneratingProfile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.props.uid}</Text>
         <Text>{this.props.firstname}</Text>
         <Text>{this.props.lastname}</Text>
       </View>

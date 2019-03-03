@@ -1,9 +1,17 @@
 import * as types from "./user.action.types";
 
-const initialState = {};
+const initialState = {
+  loggedIn: false
+};
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
+    case types.REGISTER_HIRO_USER_SUCCESS: {
+      return Object.assign({}, state, {
+        loggedIn: true
+      });
+    }
+
     case types.REGISTER_FIREBASE_SUCCESS: {
       return Object.assign({}, state, {
         uid: action.payload

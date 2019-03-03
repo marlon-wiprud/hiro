@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { connect } from "react-redux";
 import spotify from "rn-spotify-sdk";
 import * as spotifyActions from "../state/spotifyState/spotify.actions";
@@ -60,7 +60,22 @@ class SpotifyAuth extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Log in with Spotify</Text>
+        <Image
+          style={styles.hiroLogo}
+          source={require("../assets/hiro_vertical_logo.png")}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>
+            Authorize your{" "}
+            <Text style={{ color: "white" }}>Spotify Premium</Text> account to
+            help <Text style={{ color: "white" }}>Hiro</Text> provide you with
+            the{" "}
+            <Text style={{ color: "white" }}>
+              best listening experience possible
+            </Text>
+            .
+          </Text>
+        </View>
         <Button
           style={styles.spotifyLoginBtn}
           title="Authorize Spotify!"
@@ -81,6 +96,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#312C40",
     borderWidth: 3
   },
+  hiroLogo: {
+    width: 100,
+    height: 100
+  },
   welcome: {
     fontSize: 20,
     textAlign: "center",
@@ -93,6 +112,13 @@ const styles = StyleSheet.create({
   },
   spotifyLoginBtn: {
     backgroundColor: "#00FD05"
+  },
+  text: {
+    textAlign: "center",
+    color: "#ACACAC"
+  },
+  textContainer: {
+    width: "60%"
   }
 });
 
