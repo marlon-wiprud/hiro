@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import { connect } from "react-redux";
+import { RNCamera } from "react-native-camera";
 import styles from "../styles/moodStackStyles";
 
 const mapStateToProps = state => {
@@ -18,6 +19,16 @@ class RecognizeMood extends Component {
     super(props);
   }
 
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      console.log("=====DATA URI======", data.uri);
+    } else {
+      console.log("=======NO CAMERA=====");
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -27,6 +38,25 @@ class RecognizeMood extends Component {
             your mood...
           </Text>
         </View>
+        <RNCamera
+          style={{ flex: 1 }}
+          ref={ref => {
+            this.camera = ref;
+          }}
+          mirrorImage={true}
+          captureAudio={false}
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          permissionDialogTitle={"Permission to use camera"}
+          permissionDialogMessage={
+            "We need your permission to use your camera phone"
+          }
+          onGoogleVisionBarcodesDetected={({ barcodes }) => {
+            console.log(barcodes);
+          }}
+        />
+        <Button onPress={this.takePicture} title="TAKE PICTURE" />
       </View>
     );
   }

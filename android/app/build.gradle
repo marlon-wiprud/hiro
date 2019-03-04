@@ -141,6 +141,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':rn-spotify-sdk')
     compile project(':react-native-gesture-handler')
     compile project(':react-native-firebase')
