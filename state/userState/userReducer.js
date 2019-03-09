@@ -6,6 +6,14 @@ const initialState = {
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
+
+    case types.LOGIN_FIREBASE_SUCCESS:{
+      console.log('reducer uid: ===', action.payload)
+      return Object.assign({},state,{
+        uid: action.payload
+      })
+    }
+
     case types.REGISTER_HIRO_USER_SUCCESS: {
       return Object.assign({}, state, {
         loggedIn: true
