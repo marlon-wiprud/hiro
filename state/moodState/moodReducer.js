@@ -1,7 +1,8 @@
 import * as types from "./mood.action.types";
 
 const initialState = {
-  chosenMood: ""
+  chosenMood: "",
+  analyzedMood: ""
 };
 
 function moodReducer(state = initialState, action) {
@@ -10,6 +11,12 @@ function moodReducer(state = initialState, action) {
       return Object.assign({}, state, {
         chosenMood: action.payload
       });
+    }
+
+    case types.ANALYZE_MOOD_SUCCESS: {
+      return Object.assign({},state, {
+        analyzedMood: action.payload 
+      })
     }
     default:
       return state;

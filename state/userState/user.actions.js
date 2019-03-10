@@ -1,6 +1,11 @@
 import * as types from "./user.action.types";
-import firebase from "react-native-firebase";
 import { my_ip } from "../../vars";
+
+
+export const firebaseLoginSuccess = (uid) => ({
+  type: types.LOGIN_FIREBASE_SUCCESS,
+  payload: uid
+})
 
 export const saveCreateAccForm = data => ({
   type: types.SAVE_CREATE_ACC_FORM,
@@ -19,6 +24,7 @@ export const registerFirebaseSuccess = uid => ({
 
 export const registerHiroUser = data => {
   return dispatch => {
+    console.log('===SENDING REGISTER HERO FETCH')
     fetch(`http://${my_ip}:3000/user`, {
       method: "POST",
       headers: {

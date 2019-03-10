@@ -41,16 +41,10 @@ class SpotifyAuth extends Component {
     // always enable showDialog in production
     // {showDialog: true}
     spotify.login().then(isloggedIn => {
+      console.log('is logged in: ', isloggedIn)
       if (isloggedIn) {
-        this.props.userRegistration({
-          email,
-          password,
-          firstname: this.props.firstname,
-          lastname: this.props.lastname,
-          genreArr: this.props.genreArr,
-          favoriteArtist: this.props.favoriteArtist
-        });
-        this.props.navigation.navigate("GeneratingProfile");
+        console.log(111111)
+        this.props.navigation.navigate("MoodStackNav");
       } else {
         console.log("Spotify not logged in", isloggedIn);
       }
@@ -80,7 +74,7 @@ class SpotifyAuth extends Component {
           style={styles.spotifyLoginBtn}
           title="Authorize Spotify!"
           onPress={() =>
-            this.spotifyLogin(this.props.email, this.props.password)
+            this.spotifyLogin()
           }
         />
       </View>

@@ -34,7 +34,8 @@ const LoginStackNav = createStackNavigator(
     }
   },
   {
-    initialRouteName: "HiroLogin"
+    // initialRouteName: "HiroLogin"
+    initialRouteName: "MoodStackNav"
   }
 );
 

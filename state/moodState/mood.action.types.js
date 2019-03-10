@@ -1,1 +1,3 @@
-export const SAVE_MOOD = "SAVE_MOODS";
+export const SAVE_MOOD = "SAVE_MOOD";
+
+export const ANALYZE_MOOD_SUCCESS = "ANALYZE_MOOD_SUCCESS";
