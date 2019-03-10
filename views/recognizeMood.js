@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { RNCamera } from "react-native-camera";
 import styles from "../styles/moodStackStyles";
@@ -38,7 +38,7 @@ class RecognizeMood extends Component {
   };
 
   componentDidMount(){
-    setTimeout(this.takePicture,2500)
+    // setTimeout(this.takePicture,2500)
   }
 
   render() {
@@ -50,6 +50,7 @@ class RecognizeMood extends Component {
           <Text style={styles.cameraText}>
             Hold on one second while I narrow down you vibe...
           </Text>
+          <ActivityIndicator size="large" color="#EBBFA" />
           <Text style = {{color: "red", fontSize: 30}}>{this.props.analyzedMood}</Text>
           </View>
         </View>

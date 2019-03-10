@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
     opacity: 0.8
     },
   cameraText:{
-    color: "white"
+    color: "white",
+    textAlign: "center",
+    margin: 10
   },
   overlayTextContainer: {
     width: '60%'
