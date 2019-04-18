@@ -1,0 +1,5 @@
+export const SAVE_FAVORITES = "SAVE_FAVORITES";
+
+export const SAVE_IDX = "SAVE_IDX";
+
+export const TOGGLE_FAVORITES_MODE = "TOGGLE_FAVORITES_MODE";

@@ -1,7 +1,9 @@
-import React, { Component } from "react";
 import { createStackNavigator } from "react-navigation";
 import ChooseMood from "../views/chooseMood";
 import RecognizeMood from "../views/recognizeMood";
+import ConfirmMood from "../views/confirmMood";
+import MusicPlayer from "../views/musicPlayer";
+import PlayerTabNav from "../navigation/playerTabNav";
 
 const MoodStackNav = createStackNavigator(
   {
@@ -16,10 +18,22 @@ const MoodStackNav = createStackNavigator(
       navigationOptions: {
         header: null
       }
+    },
+    ConfirmMood: {
+      screen: ConfirmMood,
+      navigationOptions: {
+        header: null
+      }
+    },
+    PlayerTabNav: {
+      screen: PlayerTabNav,
+      navigationOptions: {
+        header: null
+      }
     }
   },
   {
-    initialRouteName: "ChooseMood"
+    initialRouteName: "PlayerTabNav"
   }
 );
 

@@ -18,9 +18,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    spotifyInitialize: () => {
-      dispatch(spotifyActions.initialize());
-    },
     registerFirebase: (email, password) => {
       dispatch(userActions.registerFirebase(email, password));
     },
@@ -34,16 +31,17 @@ class SpotifyAuth extends Component {
   constructor(props) {
     super(props);
     this.spotifyLogin = this.spotifyLogin.bind(this);
-    props.spotifyInitialize();
   }
 
   spotifyLogin(email, password) {
     // always enable showDialog in production
     // {showDialog: true}
-    spotify.login().then(isloggedIn => {
-      console.log('is logged in: ', isloggedIn)
+    spotify.login({ showDialog: true }).then(isloggedIn => {
+      console.log("is logged in: ", isloggedIn);
       if (isloggedIn) {
-        console.log(111111)
+        spotify
+          .getSessionAsync()
+          .then(result => console.log("GET SESSION: ", result));
         this.props.navigation.navigate("MoodStackNav");
       } else {
         console.log("Spotify not logged in", isloggedIn);
@@ -73,9 +71,7 @@ class SpotifyAuth extends Component {
         <Button
           style={styles.spotifyLoginBtn}
           title="Authorize Spotify!"
-          onPress={() =>
-            this.spotifyLogin()
-          }
+          onPress={() => this.spotifyLogin()}
         />
       </View>
     );

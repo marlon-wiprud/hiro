@@ -10,6 +10,8 @@ target 'viral' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'viralTests' do
     inherit! :search_paths
     # Pods for testing
