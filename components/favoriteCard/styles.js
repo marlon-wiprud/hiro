@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     width: "100%",
     height: 48,
     flexDirection: "row",
     borderBottomColor: "white",
-    borderBottomWidth: 2
+    borderBottomWidth: 2,
+    justifyContent: "space-between"
   },
   image: {
     height: "100%",
@@ -21,6 +21,14 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 12
+  },
+  iconContainer: {
+    paddingRight: 8,
+    height: "100%",
+    alignItems: "center"
+  },
+  texContainer: {
+    paddingLeft: 8
   }
 });
 

@@ -15,6 +15,8 @@ import { addFavorite } from "../api/favorites";
 import { saveFavorites } from "../state/favoritesState/favorites.actions";
 import DefaultController from "../components/playerControls";
 import FavoritesController from "../components/playerControls/favoritesController";
+import NavBar from "../components/navBar";
+
 const mapStateToProps = state => {
   return {
     playStatus: state.spotifyReducer.playStatus,
@@ -89,9 +91,6 @@ class MusicPlayer extends Component {
         this.startCursor();
       }
     });
-
-    // TODO: reset current position when track restarts
-    // TODO: only give favorite controller when in favorites mode
 
     spotify.on("metadataChange", res => {
       track = res.metadata.currentTrack;
@@ -230,6 +229,7 @@ class MusicPlayer extends Component {
         >
           {heart}
         </View>
+        <NavBar navigation={this.props.navigation} />
       </View>
     );
   }

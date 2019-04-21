@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "react-navigation";
 import MusicPlayer from "../views/musicPlayer";
-import MoodStackNav from "../navigation/moodStackNav";
+import MoodStackNav from "./moodStackNav.js";
 import Favorites from "../views/favorites";
 
 const PlayerTabNav = createBottomTabNavigator(
@@ -17,12 +17,6 @@ const PlayerTabNav = createBottomTabNavigator(
         title: "Favorites"
       }
     }
-    // MoodStackNav: {
-    //   screen: MoodStackNav,
-    //   navigationOptions: {
-    //     title: "Home"
-    //   }
-    // }
   },
   {
     initialRouteName: "MusicPlayer"

@@ -13,3 +13,12 @@ export const saveIdx = idx => ({
 export const toggleFavoritesMode = () => ({
   type: types.TOGGLE_FAVORITES_MODE
 });
+
+export const saveShuffleList = list => ({
+  type: types.SAVE_SHUFFLE_LIST,
+  payload: list
+});
+
+export const toggleShuffleMode = () => ({
+  type: types.TOGGLE_SHUFFLE_MODE
+});

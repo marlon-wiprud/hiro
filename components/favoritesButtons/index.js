@@ -2,9 +2,9 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 
-export const Shuffle = () => {
+export const Shuffle = ({ onPress }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Icon name="shuffle" size={25} color="#E8B1F7" />
     </TouchableOpacity>
   );
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "#E8B1F7",
     borderWidth: 3,
-    borderRadius: 10,
-    backgroundColor: "#372E40"
+    backgroundColor: "#372E40",
+    borderRadius: 10
   }
 });

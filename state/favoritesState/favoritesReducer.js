@@ -4,7 +4,9 @@ const initialState = {
   favorites: [],
   favoritesLookup: {},
   favoritesIdx: null,
-  favoritesMode: false
+  favoritesMode: false,
+  shuffleList: [],
+  shuffleMode: false
 };
 
 function spotifyReducer(state = initialState, action) {
@@ -21,6 +23,14 @@ function spotifyReducer(state = initialState, action) {
 
     case types.TOGGLE_FAVORITES_MODE: {
       return Object.assign({}, state, { favoritesMode: !state.favoritesMode });
+    }
+
+    case types.SAVE_SHUFFLE_LIST: {
+      return Object.assign({}, state, { shuffleList: action.payload });
+    }
+
+    case types.TOGGLE_SHUFFLE_MODE: {
+      return Object.assign({}, state, { shuffleMode: !state.shuffleMode });
     }
 
     default:
