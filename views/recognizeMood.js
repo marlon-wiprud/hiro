@@ -3,17 +3,18 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { RNCamera } from "react-native-camera";
 import styles from "../styles/moodStackStyles";
-import * as moodActions from '../state/moodState/mood.actions'
+import { withNavigationFocus } from "react-navigation";
+import * as moodActions from "../state/moodState/mood.actions";
+import { my_ip } from "../vars";
+
 const mapStateToProps = state => {
-  return {
-    analyzedMood: state.moodReducer.analyzedMood
-  }
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    analyzeMood: img => {
-      dispatch(moodActions.analyzeMood(img))
+    analyzeMoodSuccess: mood => {
+      dispatch(moodActions.analyzeMoodSuccess(mood));
     }
   };
 };
@@ -21,37 +22,55 @@ const mapDispatchToProps = dispatch => {
 class RecognizeMood extends Component {
   constructor(props) {
     super(props);
-    this.takePicture = this.takePicture.bind(this)
+    this.takePicture = this.takePicture.bind(this);
+    this.checkFocus = this.checkFocus.bind(this);
+    this.analyzeMood = this.analyzeMood.bind(this);
   }
 
   takePicture = async function() {
     if (this.camera) {
       const options = { quality: 0.3, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      this.props.analyzeMood(data.base64)
-      this.setState({
-        photoSrc: data.uri
-      })
+      this.analyzeMood(data.base64);
     } else {
       console.log("=======NO CAMERA=====");
     }
   };
 
-  componentDidMount(){
-    // setTimeout(this.takePicture,2500)
+  analyzeMood(img) {
+    console.log("======RUNNING=====");
+    fetch(`http://${my_ip}:3000/mood`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ img })
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log("YOUR MOOD IS: ", json);
+        this.props.analyzeMoodSuccess(json.mood);
+        this.props.navigation.navigate("ConfirmMood");
+      })
+      .catch(err => console.log(err));
+  }
+
+  checkFocus() {
+    if (this.props.isFocused) {
+      setTimeout(this.takePicture, 2000);
+    }
   }
 
   render() {
- 
+    this.checkFocus();
     return (
       <View style={styles.cameraContainer}>
         <View style={styles.cameraOverlay}>
-          <View style = {styles.overlayTextContainer} > 
-          <Text style={styles.cameraText}>
-            Hold on one second while I narrow down you vibe...
-          </Text>
-          <ActivityIndicator size="large" color="#EBBFA" />
-          <Text style = {{color: "red", fontSize: 30}}>{this.props.analyzedMood}</Text>
+          <View style={styles.overlayTextContainer}>
+            <Text style={styles.cameraText}>
+              Hold on one second while I narrow down you vibe...
+            </Text>
+            <ActivityIndicator size="large" color="#EBBFA" />
           </View>
         </View>
         <RNCamera
@@ -77,4 +96,4 @@ class RecognizeMood extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RecognizeMood);
+)(withNavigationFocus(RecognizeMood));

@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -6,19 +5,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#312C40",
+    backgroundColor: "#312C40"
   },
-  cameraContainer:{
-      flex: 1,
-      flexDirection: 'column',
-      backgroundColor: 'black'
-  
+  cameraContainer: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "black"
   },
   preview: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'purple'
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "purple"
   },
   hiroLogo: {
     width: 100,
@@ -36,21 +34,21 @@ const styles = StyleSheet.create({
     height: "100%",
     borderWidth: 3,
     zIndex: 2,
-    position:"absolute",
+    position: "absolute",
     color: "black",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#312C40",
     opacity: 0.8
-    },
-  cameraText:{
+  },
+  cameraText: {
     color: "white",
     textAlign: "center",
     margin: 10
   },
   overlayTextContainer: {
-    width: '60%'
+    width: "60%"
   }
 });
 

@@ -1,7 +1,8 @@
-import React, { Component } from "react";
 import { createStackNavigator } from "react-navigation";
 import ChooseMood from "../views/chooseMood";
 import RecognizeMood from "../views/recognizeMood";
+import ConfirmMood from "../views/confirmMood";
+import PlayerTabNav from "./playerTabNav";
 
 const MoodStackNav = createStackNavigator(
   {
@@ -13,6 +14,12 @@ const MoodStackNav = createStackNavigator(
     },
     RecognizeMood: {
       screen: RecognizeMood,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ConfirmMood: {
+      screen: ConfirmMood,
       navigationOptions: {
         header: null
       }

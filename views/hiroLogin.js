@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import HiroInput from "../components/hiroInput";
 import HiroButton from "../components/hiroButton";
 import firebase from "react-native-firebase";
-import * as userActions from "../state/userState/user.actions"
-
+import * as userActions from "../state/userState/user.actions";
+import * as spotifyActions from "../state/spotifyState/spotify.actions";
+import { getFavorites } from "../api/favorites";
+import { saveFavorites } from "../state/favoritesState/favorites.actions";
 
 const mapStateToProps = state => {
   return {};
@@ -14,7 +16,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     firebaseLoginSuccess: uid => {
-      dispatch(userActions.firebaseLoginSuccess(uid))
+      dispatch(userActions.firebaseLoginSuccess(uid));
+    },
+    spotifyInitialize: () => {
+      dispatch(spotifyActions.initialize());
+    },
+    saveFavorites: favorites => {
+      dispatch(saveFavorites(favorites));
     }
   };
 };
@@ -23,9 +31,11 @@ class HiroLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password:""
-    }
+      email: "test@gmail.com",
+      password: "aaaaaa"
+    };
+    props.spotifyInitialize();
+
     this.firebaseLogin = this.firebaseLogin.bind(this);
   }
 
@@ -33,17 +43,20 @@ class HiroLogin extends Component {
     console.log("HANDLING CLICK");
   }
 
-  firebaseLogin(email, password){
-    firebase.
-    auth()
-    .signInWithEmailAndPassword(email,password)
-    .then((userData) => {
-      console.log(userData.user.uid);
-      this.props.firebaseLoginSuccess(userData.user.uid)
-      this.props.navigation.navigate("MoodStackNav");
-
-    })
-    .catch(err => console.log(err))
+  firebaseLogin(email, password) {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(userData => {
+        console.log(userData.user.uid);
+        this.props.firebaseLoginSuccess(userData.user.uid);
+        getFavorites(userData.user.uid).then(res => {
+          this.props.saveFavorites(res);
+          this.props.navigation.navigate("MoodStackNav");
+        });
+        // this.props.navigation.navigate("SpotifyAuth");
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -54,18 +67,24 @@ class HiroLogin extends Component {
           source={require("../assets/hiro_vertical_logo.png")}
         />
         <View>
-          <HiroInput prompt="E-mail" onChange={text => this.setState({ email: text })} />
-          <HiroInput prompt="Password" 
-                     onChange={text => this.setState({ password: text })}  
-                     isSecure = {true}
-                     />
+          <HiroInput
+            prompt="E-mail"
+            onChange={text => this.setState({ email: text })}
+          />
+          <HiroInput
+            prompt="Password"
+            onChange={text => this.setState({ password: text })}
+            isSecure={true}
+          />
         </View>
         <View>
           <HiroButton
             title="Login"
             color="#EDB5FC"
             borderColor="#EDB5FC"
-            handleClick={() => this.firebaseLogin(this.state.email,this.state.password)}
+            handleClick={() =>
+              this.firebaseLogin(this.state.email, this.state.password)
+            }
           />
         </View>
         <TouchableOpacity
